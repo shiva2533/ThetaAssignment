@@ -30,23 +30,24 @@ class LoginActivity : AppCompatActivity() {
         val repository = LoginRepository(this)
         val viewModelProviderFactory = LoginViewModelProviderFactory(repository)
         viewModel =
-                ViewModelProvider(this, viewModelProviderFactory).get(LoginViewModel::class.java)
+            ViewModelProvider(this, viewModelProviderFactory).get(LoginViewModel::class.java)
 
         btnLogin.setOnClickListener {
             if (validateEmailPassword(
-                            editTextEmail.text.toString(),
-                            editTextPassword.text.toString()
-                    )
-            )
+                    editTextEmail.text.toString(),
+                    editTextPassword.text.toString()
+                )
+            ) {
 
                 viewModel.saveCredentials(
-                        editTextEmail.text.toString(),
-                        editTextPassword.text.toString()
+                    editTextEmail.text.toString(),
+                    editTextPassword.text.toString()
                 )
 
-            val intent = Intent(this, HomeActivity::class.java)
-            startActivity(intent)
-            finish()
+                val intent = Intent(this, HomeActivity::class.java)
+                startActivity(intent)
+                finish()
+            }
 
 
         }

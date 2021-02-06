@@ -45,4 +45,8 @@ class HomeViewModel(val repository: HomeRepository) : ViewModel() {
         }
         return Resource.Error(response.message())
     }
+
+    fun removeAllData() = viewModelScope.launch {
+        repository.removeAllData()
+    }
 }

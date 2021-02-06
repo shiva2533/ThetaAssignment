@@ -8,11 +8,14 @@ import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.example.thetatechnolabassignment.R
+import com.example.thetatechnolabassignment.home.model.HomeActivity
+import com.example.thetatechnolabassignment.home.viewModel.HomeViewModel
 import com.example.thetatechnolabassignment.login.LoginActivity
 import kotlinx.android.synthetic.main.fragment_profile.*
 
 
 class ProfileFragment : Fragment() {
+    lateinit var viewModel: HomeViewModel
 
 
     override fun onCreateView(
@@ -24,6 +27,7 @@ class ProfileFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        viewModel = (activity as HomeActivity).viewModel
         val sharedPreferences =
             activity?.getSharedPreferences("sharedPrefs", AppCompatActivity.MODE_PRIVATE)
         if (sharedPreferences != null) {
@@ -36,10 +40,7 @@ class ProfileFragment : Fragment() {
 
         }
         btnLogout.setOnClickListener {
-            val sharedPreferencesEditor = sharedPreferences?.edit()
-            sharedPreferencesEditor?.remove("sharedPrefs")
-            sharedPreferencesEditor?.clear()
-            sharedPreferencesEditor?.apply()
+            viewModel.removeAllData()
             activity?.startActivity(Intent(activity, LoginActivity::class.java))
             activity?.finish()
 

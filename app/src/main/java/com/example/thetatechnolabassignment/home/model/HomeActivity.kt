@@ -22,7 +22,7 @@ class HomeActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
-        val repository = HomeRepository(UserDataBase(this))
+        val repository = HomeRepository(this,UserDataBase(this))
         val viewModelProviderFactory = HomeViewModelProvider(repository)
         viewModel = ViewModelProvider(this, viewModelProviderFactory).get(HomeViewModel::class.java)
         supportFragmentManager.commit {
