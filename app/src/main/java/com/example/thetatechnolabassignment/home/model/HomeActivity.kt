@@ -5,7 +5,6 @@ import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.add
 import androidx.fragment.app.commit
 import androidx.fragment.app.replace
 import androidx.lifecycle.ViewModelProvider
@@ -31,8 +30,6 @@ class HomeActivity : AppCompatActivity() {
             replace<HomeFragment>(R.id.fragmentContainer)
         }
     }
-
-
 
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {

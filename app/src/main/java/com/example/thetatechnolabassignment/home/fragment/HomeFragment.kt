@@ -73,6 +73,7 @@ class HomeFragment : Fragment() {
             when (response) {
                 is Resource.Success -> {
                     response.data.let {
+                        swipeToRefresh.isRefreshing=false
                         hideProgressBar()
                         dataList = it?.data as MutableList<Data>
                         userAdapter.differ.submitList(it.data.toList())
@@ -81,10 +82,12 @@ class HomeFragment : Fragment() {
                     }
                 }
                 is Resource.Loading -> {
+
                     showProgressBar()
 
                 }
                 is Resource.Error -> {
+                    swipeToRefresh.isRefreshing=false
                     hideProgressBar()
                 }
             }
@@ -105,7 +108,7 @@ class HomeFragment : Fragment() {
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
                 val position = viewHolder.adapterPosition
                 val data = dataList?.get(position)
-                 dataList?.remove(data)
+                dataList?.remove(data)
 
                 userAdapter.differ.submitList(dataList)
 
@@ -113,6 +116,9 @@ class HomeFragment : Fragment() {
             }
         }
         ItemTouchHelper(itemTouchHelperCallBack).attachToRecyclerView(rvUser)
+        swipeToRefresh.setOnRefreshListener {
+            viewModel.getAllUsers()
+        }
 
     }
 
@@ -131,6 +137,7 @@ class HomeFragment : Fragment() {
             layoutManager = LinearLayoutManager(activity)
             adapter = userAdapter
             addOnScrollListener(this@HomeFragment.scrollListener)
+
 
         }
     }
